@@ -11,7 +11,7 @@
 
     transition: .2s linear;
 
-    --swiper-navigation-top-offset: auto;
+    --swiper-navigation-top-offset: 50%;
     --swiper-navigation-color: var(--dark_color);
     --swiper-navigation-size: 94px;
     --swiper-navigation-sides-offset: 0;

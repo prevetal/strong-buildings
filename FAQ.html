@@ -27,13 +27,14 @@
 		<link rel="stylesheet" href="css/reset.css">
 		<link rel="stylesheet" href="css/swiper-bundle.min.css">
 		<link rel="stylesheet" href="css/swiper.css">
+		<link rel="stylesheet" href="css/fancybox.css">
 		<link rel="stylesheet" href="css/styles.css">
 		<link rel="stylesheet" href="css/fonts.css">
 
+		<link rel="stylesheet" href="css/response_1439.css" media="print, (max-width: 1439px)">
 		<link rel="stylesheet" href="css/response_1279.css" media="print, (max-width: 1279px)">
 		<link rel="stylesheet" href="css/response_1023.css" media="print, (max-width: 1023px)">
 		<link rel="stylesheet" href="css/response_767.css" media="print, (max-width: 767px)">
-		<link rel="stylesheet" href="css/response_479.css" media="(max-width: 479px)">
 	</head>
 
 	<body>
@@ -41,9 +42,9 @@
 			<div class="main">
 				<header>
 					<div class="cont">
-						<div class="logo">
+						<a href="/" class="logo">
 							<img src="images/logo.png" alt="">
-						</div>
+						</a>
 
 						<div class="phone">
 							<a href="tel:8 800 300-43-22">8 800 300-43-22</a>
@@ -65,17 +66,207 @@
 							</a>
 						</div>
 
-						<button class="search_btn">
+						<button class="search_btn" popovertarget="search_modal">
 							<svg class="icon"><use xlink:href="images/sprite.svg#ic_search"></use></svg>
 						</button>
+
+						<form action="" class="search form" id="search_modal" popover>
+							<input type="text" name="" value="" class="input" placeholder="Введите запрос">
+
+							<button type="submit" class="submit_btn">
+								<svg class="icon"><use xlink:href="images/sprite.svg#ic_search"></use></svg>
+							</button>
+						</form>
 					</div>
 
 					<div class="cont">
-						<button class="catalog_btn">
+						<button class="catalog_btn" popovertarget="catalog_modal">
 							<svg class="icon"><use xlink:href="images/sprite.svg#ic_menu"></use></svg>
 
 							<span>Продукция</span>
 						</button>
+
+						<div class="catalog_mini_modal" id="catalog_modal" popover>
+							<div class="categories">
+								<div>
+									<a href="/" class="link main_link sub_link">
+										<span>Серийные здания стронг</span>
+
+										<svg class="arr"><use xlink:href="images/sprite.svg#ic_arrow_hor"></use></svg>
+									</a>
+
+									<div class="sub_data">
+										<div class="head">
+											<div class="name">Здание серии «Стронг»</div>
+
+											<picture class="image">
+												<img src="images/tmp/catalog_sub_data_img.jpg" alt="" loading="lazy" class="cover">
+											</picture>
+										</div>
+
+										<div class="row">
+											<div class="categories">
+												<div><a href="/" class="link">
+													<span>описание</span>
+
+													<svg class="arr"><use xlink:href="images/sprite.svg#ic_arrow_hor"></use></svg>
+												</a></div>
+
+												<div>
+													<a href="/" class="link sub_link">
+														<span>размеры</span>
+
+														<svg class="arr"><use xlink:href="images/sprite.svg#ic_arrow_hor"></use></svg>
+													</a>
+
+													<div class="data">
+														<div class="section">
+															<div class="name">На основе балок переменного сечения</div>
+
+															<div class="links">
+																<div><a href="/">Однопролетные здания 18, 24, 30, 36 м</a></div>
+
+																<div><a href="/">Многопролетные здания 36, 48, 60 м</a></div>
+															</div>
+														</div>
+
+														<div class="section">
+															<div class="name">Применение:</div>
+
+															<div class="links">
+																<div><a href="/">производственные здания;</a></div>
+
+																<div><a href="/">логистические комплексы и склады;</a></div>
+
+																<div><a href="/">автосалоны;</a></div>
+
+																<div><a href="/">спортивные сооружения;</a></div>
+
+																<div><a href="/">офисы;</a></div>
+
+																<div><a href="/">сельскохозяйственные здания.</a></div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<div><a href="/" class="link">
+													<span>каркас</span>
+
+													<svg class="arr"><use xlink:href="images/sprite.svg#ic_arrow_hor"></use></svg>
+												</a></div>
+
+												<div><a href="/" class="link">
+													<span>ограждающие<br> конструкции</span>
+
+													<svg class="arr"><use xlink:href="images/sprite.svg#ic_arrow_hor"></use></svg>
+												</a></div>
+
+												<div><a href="/" class="link">
+													<span>доп. комплектация</span>
+
+													<svg class="arr"><use xlink:href="images/sprite.svg#ic_arrow_hor"></use></svg>
+												</a></div>
+
+												<div><a href="/" class="link">
+													<span>видео</span>
+
+													<svg class="arr"><use xlink:href="images/sprite.svg#ic_arrow_hor"></use></svg>
+												</a></div>
+
+												<div><a href="/" class="link">
+													<span>сконфигурировать</span>
+
+													<svg class="arr"><use xlink:href="images/sprite.svg#ic_arrow_hor"></use></svg>
+												</a></div>
+
+												<div><a href="/" class="link">
+													<span>заказать</span>
+
+													<svg class="arr"><use xlink:href="images/sprite.svg#ic_arrow_hor"></use></svg>
+												</a></div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div><a href="/" class="link main_link sub_link">
+									<span>Готовые здания со склада</span>
+
+									<svg class="arr"><use xlink:href="images/sprite.svg#ic_arrow_hor"></use></svg>
+								</a></div>
+
+								<div><a href="/" class="link main_link">
+									<span>Производственные сооружения</span>
+
+									<picture class="thumb">
+										<img src="images/tmp/objects_category_thumb1.png" alt="" loading="lazy">
+									</picture>
+
+									<svg class="arr"><use xlink:href="images/sprite.svg#ic_arrow_hor"></use></svg>
+								</a></div>
+
+								<div><a href="/" class="link main_link">
+									<span>Логистические комплексы и склады</span>
+
+									<picture class="thumb">
+										<img src="images/tmp/objects_category_thumb2.png" alt="" loading="lazy">
+									</picture>
+
+									<svg class="arr"><use xlink:href="images/sprite.svg#ic_arrow_hor"></use></svg>
+								</a></div>
+
+								<div><a href="/" class="link main_link">
+									<span>Автосалоны</span>
+
+									<picture class="thumb">
+										<img src="images/tmp/objects_category_thumb3.png" alt="" loading="lazy">
+									</picture>
+
+									<svg class="arr"><use xlink:href="images/sprite.svg#ic_arrow_hor"></use></svg>
+								</a></div>
+
+								<div><a href="/" class="link main_link">
+									<span>Спортивные сооружения</span>
+
+									<picture class="thumb">
+										<img src="images/tmp/objects_category_thumb4.png" alt="" loading="lazy">
+									</picture>
+
+									<svg class="arr"><use xlink:href="images/sprite.svg#ic_arrow_hor"></use></svg>
+								</a></div>
+
+								<div><a href="/" class="link main_link">
+									<span>Сельскохозяйственные сооружения</span>
+
+									<picture class="thumb">
+										<img src="images/tmp/objects_category_thumb5.png" alt="" loading="lazy">
+									</picture>
+
+									<svg class="arr"><use xlink:href="images/sprite.svg#ic_arrow_hor"></use></svg>
+								</a></div>
+
+								<div><a href="/" class="link main_link">
+									<span>торговые центры<br> и магазины</span>
+
+									<picture class="thumb">
+										<img src="images/tmp/objects_category_thumb6.png" alt="" loading="lazy">
+									</picture>
+
+									<svg class="arr"><use xlink:href="images/sprite.svg#ic_arrow_hor"></use></svg>
+								</a></div>
+
+								<div><a href="/" class="link main_link">
+									<span>Офисы</span>
+
+									<picture class="thumb">
+										<img src="images/tmp/objects_category_thumb7.png" alt="" loading="lazy">
+									</picture>
+
+									<svg class="arr"><use xlink:href="images/sprite.svg#ic_arrow_hor"></use></svg>
+								</a></div>
+							</div>
+						</div>
 
 						<nav class="menu">
 							<div class="item">
@@ -114,13 +305,17 @@
 
 				<section class="mob_header">
 					<div class="cont">
-						<div class="logo">
-							<img src="images/logo.svg" alt="">
-						</div>
-
 						<button class="mob_menu_btn">
-							<span></span>
+							<svg class="icon"><use xlink:href="images/sprite.svg#ic_menu"></use></svg>
 						</button>
+
+						<a href="/" class="logo">
+							<img src="images/logo.png" alt="">
+						</a>
+
+						<a href="tel:8 800 300-43-22" class="phone">
+							<svg class="icon"><use xlink:href="images/sprite.svg#ic_phone"></use></svg>
+						</a>
 					</div>
 				</section>
 
@@ -395,11 +590,20 @@
 		</div>
 
 
+		<section class="cookie_info">
+			<div class="text">Мы используем файлы cookie для обеспечения корректной работы сайта, аналитики и повышения удобства. Продолжая использовать сайт, вы соглашаетесь c Политикой конфиденциальности и обработки персональных данных.</div>
+
+			<button class="btn">Хорошо</button>
+		</section>
+
+
 		<!-- Connecting javascript files -->
 		<script src="js/jquery-3.7.1.min.js"></script>
 		<script src="js/functions.js"></script>
 		<script src="js/swiper-bundle.min.js"></script>
+		<script src="js/nice-select2.js"></script>
 		<script src="js/maska.min.js"></script>
+		<script src="js/fancybox.js"></script>
 		<script src="js/scripts.js"></script>
 	</body>
 </html>

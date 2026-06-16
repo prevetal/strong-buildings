@@ -1,15 +1,14 @@
 BODY = document.getElementsByTagName('body')[0]
 
+// Mobile width
+initAdaptiveViewport()
+
 document.addEventListener('DOMContentLoaded', function() {
-	// Mobile width
-	initAdaptiveViewport()
-
-
 	// Main slider
 	const mainSlider = document.querySelector('.main_slider .swiper')
 
 	if (mainSlider) {
-		new Swiper(mainSlider, {
+		const swiper = new Swiper(mainSlider, {
 			loop: true,
 			speed: 500,
 			watchSlidesProgress: true,
@@ -18,6 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
 			spaceBetween: getCssVar(mainSlider, '--spaceBetween'),
 			slidesPerView: getCssVar(mainSlider, '--slidesPerView'),
 			lazy: true,
+			effect: 'fade',
+			fadeEffect: {
+				crossFade: true
+			},
 			pagination: {
 				el: mainSlider.querySelector('.swiper-pagination'),
 				type: 'bullets',
@@ -29,6 +32,21 @@ document.addEventListener('DOMContentLoaded', function() {
 				prevEl: mainSlider.querySelector('.swiper-button-prev')
 			}
 		})
+
+		const updateNextThumb = (swiper) => {
+			const nextIndex = (swiper.realIndex + 1) % swiper.slides.length,
+				nextSlide = swiper.slides[nextIndex],
+				nextImg = nextSlide?.querySelector('.image img'),
+				thumb = mainSlider.querySelector('.swiper-button-next .thumb img')
+
+			if (nextImg && thumb) {
+				thumb.src = nextImg.src
+			}
+		}
+
+		swiper.on('init', updateNextThumb)
+		swiper.on('slideChange', updateNextThumb)
+		swiper.emit('init')
 	}
 
 
@@ -116,17 +134,87 @@ document.addEventListener('DOMContentLoaded', function() {
 	})
 
 
-	// Modals
-	document.querySelectorAll('[popover]').forEach(el => {
-		el.addEventListener('toggle', e => document.body.classList.toggle('lock', e.newState === 'open'))
+	// Service production gallery
+	const serviceProductionGallery = document.querySelector('.service_production .gallery'),
+		serviceProductionGalleryBig = document.querySelector('.service_production .gallery .big .swiper'),
+		serviceProductionGalleryThumbs = document.querySelector('.service_production .gallery .thumbs .swiper')
+
+	if (serviceProductionGallery) {
+		const thumbs = new Swiper(serviceProductionGalleryThumbs, {
+			loop: true,
+			speed: 500,
+			watchSlidesProgress: true,
+			slideActiveClass: 'active',
+			slideVisibleClass: 'visible',
+			lazy: true,
+			breakpoints: {
+				0: {
+					spaceBetween: getCssVar(serviceProductionGalleryThumbs, '--spaceBetween-0'),
+					slidesPerView: getCssVar(serviceProductionGalleryThumbs, '--slidesPerView-0'),
+				},
+				768: {
+					spaceBetween: getCssVar(serviceProductionGalleryThumbs, '--spaceBetween-768'),
+					slidesPerView: getCssVar(serviceProductionGalleryThumbs, '--slidesPerView-768'),
+				},
+				1280: {
+					spaceBetween: getCssVar(serviceProductionGalleryThumbs, '--spaceBetween-1280'),
+					slidesPerView: getCssVar(serviceProductionGalleryThumbs, '--slidesPerView-1280'),
+				}
+			},
+		})
+
+		new Swiper(serviceProductionGalleryBig, {
+			loop: true,
+			speed: 500,
+			watchSlidesProgress: true,
+			slideActiveClass: 'active',
+			slideVisibleClass: 'visible',
+			spaceBetween: getCssVar(serviceProductionGalleryBig, '--spaceBetween'),
+			slidesPerView: getCssVar(serviceProductionGalleryBig, '--slidesPerView'),
+			lazy: true,
+			effect: 'fade',
+			fadeEffect: {
+				crossFade: true
+			},
+			thumbs: {
+				swiper: thumbs
+			},
+			navigation: {
+				nextEl: serviceProductionGalleryBig.querySelector('.swiper-button-next'),
+				prevEl: serviceProductionGalleryBig.querySelector('.swiper-button-prev')
+			},
+		})
+	}
+
+
+	// Fancybox
+	const fancyOptions = {
+		dragToClose: false,
+		placeFocusBack: false,
+		l10n: {
+			CLOSE: 'Закрыть',
+			NEXT: 'Следующий',
+			PREV: 'Предыдущий',
+			MODAL: 'Вы можете закрыть это модальное окно нажав клавишу ESC'
+		}
+	}
+
+
+	// Zoom images
+	Fancybox.bind('.fancy_img', {
+		...fancyOptions,
+		Image: {
+			zoom: false
+		},
+		Thumbs: {
+			autoStart: false
+		}
 	})
 
-	document.querySelectorAll('.modal .container').forEach(wrapper => {
-		wrapper.addEventListener('click', e => {
-			if (e.target === wrapper) {
-				wrapper.closest('[popover]').hidePopover()
-			}
-		})
+
+	// Popover
+	document.querySelectorAll('[popover]').forEach(el => {
+		el.addEventListener('toggle', e => document.querySelector(`[popovertarget="${el.id}"]`)?.classList.toggle('active', e.newState === 'open'))
 	})
 
 
@@ -137,15 +225,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		$('.mob_header .mob_menu_btn').toggleClass('active')
 		$('body').toggleClass('lock')
 		$('.mob_menu, .overlay').toggleClass('show')
-	})
-
-
-	// 'Up' button
-	$('.buttonUp .btn').click((e) => {
-		e.preventDefault()
-
-		$('html, body').scrollTop(0)
-		// $('body, html').stop(false, false).animate({ scrollTop: 0 }, 1000)
 	})
 
 
@@ -161,6 +240,25 @@ document.addEventListener('DOMContentLoaded', function() {
 	if (fileInputs) {
 		fileInputs.forEach(el => {
 			el.addEventListener('change', () => el.closest('.file').querySelector('.path').innerText = el.value)
+		})
+	}
+
+
+	// Custom select - Nice select
+	const selects = document.querySelectorAll('select:not(.skip)'),
+		selectsInstances = []
+
+	if (selects) {
+		selects.forEach(el => {
+			selectsInstances.push(NiceSelect.bind(el, {
+				placeholder: el.getAttribute('data-placeholder')
+			}))
+
+			el.addEventListener('change', () => el.classList.add('selected'))
+
+			if (el.querySelector('option[selected]')) {
+				el.classList.add('selected')
+			}
 		})
 	}
 
@@ -196,20 +294,32 @@ document.addEventListener('DOMContentLoaded', function() {
 	// Smooth scrolling to anchor
 	const scrollBtns = document.querySelectorAll('.scroll_btn')
 
-	if (scrollBtns) {
-		scrollBtns.forEach(element => {
-			element.addEventListener('click', e => {
-				e.preventDefault()
+	scrollBtns.forEach(el => {
+		el.addEventListener('click', e => {
+			e.preventDefault()
 
-				let anchor = element.getAttribute('data-anchor')
+			const anchor = el.getAttribute('data-anchor')
+			const target = document.getElementById(anchor)
 
-				document.getElementById(anchor).scrollIntoView({
-					behavior: 'smooth',
-					block: 'start'
-				}, 1000)
-			})
+			if (!target) return
+
+			const popover = el.closest('[popover]')
+			if (popover) popover.hidePopover()
+
+			if (target.classList.contains('tab_content')) {
+				const tabsContainer = target.closest('.tabs_container')
+				const tabBtn = tabsContainer?.querySelector(`.tabs .btn[data-content="#${anchor}"]`)
+
+				if (tabBtn && !tabBtn.classList.contains('active')) {
+					tabBtn.click()
+				}
+
+				tabsContainer?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+			} else {
+				target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+			}
 		})
-	}
+	})
 
 
 	// Tabs
@@ -227,8 +337,16 @@ document.addEventListener('DOMContentLoaded', function() {
 			parent.find('.tabs:first .btn').removeClass('active')
 			parent.find('.tab_content.' + level).removeClass('active')
 
-			$(this).addClass('active')
+			parent.find(`.tabs:first .btn[data-content="${activeTab}"]`).addClass('active')
 			activeTabContent.addClass('active')
+
+			let popover = $(this).closest('[popover]')
+
+			if (popover.length) {
+				popover[0].hidePopover()
+			}
+
+			$(this).closest('.tabs').find('.tabs_btn span').text($(this).text())
 		}
 	})
 
@@ -266,38 +384,210 @@ document.addEventListener('DOMContentLoaded', function() {
 				.find('.hidden').slideDown(300)
 		}
 	})
+
+
+	// Order buildin
+	var orderBuildingCurrentStep = 1
+
+	$('.order_building .full_mode_btn').click(function(e) {
+		e.preventDefault()
+
+		$('.order_building .form.short').hide()
+		$('.order_building .form.full').fadeIn(200)
+
+		document.querySelector('.order_building .form.full').scrollIntoView({
+			behavior: 'smooth',
+			block: 'start'
+		}, 1000)
+	})
+
+
+	$('.order_building .short_mode_btn').click(function(e) {
+		e.preventDefault()
+
+		$('.order_building .form.full').hide()
+		$('.order_building .form.short').fadeIn(200)
+
+		document.querySelector('.order_building .form.full').scrollIntoView({
+			behavior: 'smooth',
+			block: 'start'
+		}, 1000)
+	})
+
+
+	$('.order_building .next_btn').click(function(e) {
+		e.preventDefault()
+
+		orderBuildingCurrentStep++
+
+		$('.order_building .form.full .step').removeClass('show')
+		$('.order_building .form.full .step' + orderBuildingCurrentStep).addClass('show')
+
+		document.querySelector('.order_building .form.full').scrollIntoView({
+			behavior: 'smooth',
+			block: 'start'
+		}, 1000)
+	})
+
+
+	$('.order_building .prev_btn').click(function(e) {
+		e.preventDefault()
+
+		orderBuildingCurrentStep = orderBuildingCurrentStep - 1
+
+		$('.order_building .form.full .step').removeClass('show')
+		$('.order_building .form.full .step' + orderBuildingCurrentStep).addClass('show')
+
+		document.querySelector('.order_building .form.full').scrollIntoView({
+			behavior: 'smooth',
+			block: 'start'
+		}, 1000)
+	})
+
+
+	$('.order_building .edit_btn').click(function(e) {
+		e.preventDefault()
+
+		orderBuildingCurrentStep = parseInt($(this).data('step'))
+
+		$('.order_building .form.full .step').removeClass('show')
+		$('.order_building .form.full .step' + orderBuildingCurrentStep).addClass('show')
+
+		document.querySelector('.order_building .form.full').scrollIntoView({
+			behavior: 'smooth',
+			block: 'start'
+		}, 1000)
+	})
+
+
+	// Catalog modal
+	$('.catalog_mini_modal .categories .link.main_link.sub_link').click(function(e) {
+		e.preventDefault()
+
+		$('.catalog_mini_modal .categories .link.sub_link').removeClass('active')
+		$('.catalog_mini_modal .categories .sub_data').removeClass('show')
+
+		$(this).addClass('active')
+			.next('.sub_data').addClass('show')
+	})
+
+
+	$('.catalog_mini_modal .categories .sub_data .link.sub_link').click(function(e) {
+		e.preventDefault()
+
+		$('.catalog_mini_modal .categories .sub_data .link.sub_link').removeClass('active')
+		$('.catalog_mini_modal .categories .sub_data .data').removeClass('show')
+
+		$(this).addClass('active')
+			.next('.data').addClass('show')
+	})
+
+
+	// Catalog
+	$('.catalog .link').on('mouseenter', function() {
+		const subH = $(this).find('.sub')[0].scrollHeight
+
+		$(this).css('--sub-h', subH + 'px')
+	}).on('mouseleave', function() {
+		$(this).css('--sub-h', '0px')
+	})
 })
 
 
 
 window.addEventListener('load', function () {
+	// Fix. header
+	headerInit = true,
+	headerHeight = $('header').outerHeight()
+
+	$('header').wrap('<div class="header_wrap"></div>')
+	$('.header_wrap').height(headerHeight)
+
+	headerInit && $(window).scrollTop() > headerHeight
+		? $('header').addClass('fixed')
+		: $('header').removeClass('fixed')
+
+
 	// Aligning elements in the grid
 	document.querySelectorAll('.FAQ_other .grid_row').forEach(el => {
 		let styles = getComputedStyle(el)
 
 		FAQOtherHeight(el, parseInt(styles.getPropertyValue('--items_per_line')))
+	})
+
+
+	// Ready buildings from stock pluses
+	document.querySelectorAll('.ready_buildings_from_stock .pluses .grid_row').forEach(el => {
+		let styles = getComputedStyle(el)
+
+		readyBuildingsFromStockPlusesHeight(el, parseInt(styles.getPropertyValue('--items_per_line')))
+	})
+})
+
+
+window.addEventListener('resize', function () {
+	// Fix. header
+	headerInit = false
+	$('.header_wrap').height('auto')
+
+	setTimeout(() => {
+		headerInit = true
+		headerHeight = $('header').outerHeight()
+
+		$('.header_wrap').height(headerHeight)
+
+		headerInit && $(window).scrollTop() > headerHeight
+			? $('header').addClass('fixed')
+			: $('header').removeClass('fixed')
+	}, 100)
+
+
+	// Aligning elements in the grid
+	document.querySelectorAll('.FAQ_other .grid_row').forEach(el => {
+		let styles = getComputedStyle(el)
+
+		FAQOtherHeight(el, parseInt(styles.getPropertyValue('--items_per_line')))
+	})
+
+
+	// Ready buildings from stock pluses
+	document.querySelectorAll('.ready_buildings_from_stock .pluses .grid_row').forEach(el => {
+		let styles = getComputedStyle(el)
+
+		readyBuildingsFromStockPlusesHeight(el, parseInt(styles.getPropertyValue('--items_per_line')))
 	})
 })
 
 
 
 window.addEventListener('scroll', function () {
-	// 'Up' button
-	$(window).scrollTop() > $(window).innerHeight()
-		? $('.buttonUp').fadeIn(300)
-		: $('.buttonUp').fadeOut(200)
+	// Fix. header
+	typeof headerInit !== 'undefined' && headerInit && $(window).scrollTop() > headerHeight
+		? $('header').addClass('fixed')
+		: $('header').removeClass('fixed')
 })
 
 
+// Ready buildings from stock pluses
+function readyBuildingsFromStockPlusesHeight(context, step) {
+	let start = 0,
+		finish = step,
+		items = [...context.querySelectorAll('.item')],
+		itemName = context.querySelectorAll('.name'),
+		i = 0
 
-window.addEventListener('resize', function () {
-	// Aligning elements in the grid
-	document.querySelectorAll('.FAQ_other .grid_row').forEach(el => {
-		let styles = getComputedStyle(el)
+	itemName.forEach(el => el.style.height = 'auto')
 
-		FAQOtherHeight(el, parseInt(styles.getPropertyValue('--items_per_line')))
+	items.forEach(el => {
+		items.slice(start, finish).forEach(el => el.setAttribute('nodeList', i))
+
+		setHeight(context.querySelectorAll('[nodeList="' + i + '"] .name'))
+
+		start = start + step
+		finish = finish + step
+		i++
 	})
-})
+}
 
 
 
