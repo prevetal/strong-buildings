@@ -228,6 +228,28 @@ document.addEventListener('DOMContentLoaded', function() {
 	})
 
 
+	$('.mob_menu .categories .link.main_link.sub_link').click(function(e) {
+		e.preventDefault()
+
+		$('.mob_menu .categories .link.sub_link').removeClass('active')
+		$('.mob_menu .categories .sub_data').removeClass('show')
+
+		$(this).addClass('active')
+			.next('.sub_data').addClass('show')
+	})
+
+
+	$('.mob_menu .categories .sub_data .link.sub_link').click(function(e) {
+		e.preventDefault()
+
+		$('.mob_menu .categories .sub_data .link.sub_link').removeClass('active')
+		$('.mob_menu .categories .sub_data .data').removeClass('show')
+
+		$(this).addClass('active')
+			.next('.data').addClass('show')
+	})
+
+
 	// Phone input mask
 	new Maska.MaskInput('input[type=tel]', {
 		mask: '+7 (###) ###-##-##'
@@ -490,6 +512,14 @@ document.addEventListener('DOMContentLoaded', function() {
 		$(this).css('--sub-h', subH + 'px')
 	}).on('mouseleave', function() {
 		$(this).css('--sub-h', '0px')
+	})
+
+
+	// Cookie
+	$('.cookie_info .btn').click(function(e) {
+		e.preventDefault()
+
+		$('.cookie_info').fadeOut(200)
 	})
 })
 

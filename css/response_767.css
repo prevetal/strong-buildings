@@ -35,6 +35,15 @@
             bottom: 380px;
             left: -408px;
         }
+
+
+        &.l_before
+        {
+            &:before
+            {
+                right: -304px;
+            }
+        }
     }
 
 
