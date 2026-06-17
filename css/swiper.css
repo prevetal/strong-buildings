@@ -43,6 +43,12 @@
 
         color: var(--primary_color);
     }
+
+
+    &:hover
+    {
+        --swiper-navigation-color: #94a9cb;
+    }
 }
 
 

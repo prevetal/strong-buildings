@@ -7,7 +7,7 @@
     margin: 0;
     padding: 0;
 
-    scroll-margin-top: var(--cont_padding);
+    scroll-margin-top: calc(78px + var(--cont_padding));
 }
 
 *:before,
