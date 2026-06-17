@@ -52,7 +52,7 @@
 							<div class="exp">бесплатно<br> на территории РФ</div>
 						</div>
 
-						<button class="callback_btn">
+						<button class="callback_btn" popovertarget="callback_modal">
 							<svg class="icon"><use xlink:href="images/sprite.svg#ic_phone"></use></svg>
 
 							<span>Оставить заявку</span>
@@ -532,7 +532,7 @@
 									<div class="exp">бесплатно<br> на территории РФ</div>
 								</div>
 
-								<button class="callback_btn">
+								<button class="callback_btn" popovertarget="callback_modal">
 									<svg class="icon"><use xlink:href="images/sprite.svg#ic_phone"></use></svg>
 
 									<span>заказать звонок</span>
@@ -938,6 +938,66 @@
 				</div>
 			</footer>
 		</div>
+
+
+		<section class="cookie_info">
+			<div class="text">Мы используем файлы cookie для обеспечения корректной работы сайта, аналитики и повышения удобства. Продолжая использовать сайт, вы соглашаетесь c Политикой конфиденциальности и обработки персональных данных.</div>
+
+			<button class="btn">Хорошо</button>
+		</section>
+
+
+		<section class="modal" id="callback_modal" popover>
+			<div class="wrapper">
+				<div class="inner">
+					<button type="button" class="close_btn" popovertarget="callback_modal" popovertargetaction="hide">
+						<svg class="icon"><use xlink:href="images/sprite.svg#ic_close"></use></svg>
+					</button>
+
+					<picture class="image">
+						<img src="images/tmp/callback_modal_img.jpg" alt="" loading="lazy" class="cover">
+					</picture>
+
+					<div class="data">
+						<div class="modal_title">Заказать звонок</div>
+
+						<form action="" class="form">
+							<div class="columns">
+								<div class="line">
+									<div class="field">
+										<div class="label">Ваше имя *</div>
+
+										<input type="text" name="" value="" class="input">
+									</div>
+								</div>
+
+								<div class="line">
+									<div class="field">
+										<div class="label">Контактный телефон *</div>
+
+										<input type="tel" name="" value="" class="input">
+									</div>
+								</div>
+							</div>
+
+							<div class="line">
+								<div class="field">
+									<div class="label">Комментарий</div>
+
+									<textarea name=""></textarea>
+								</div>
+							</div>
+
+							<div class="submit">
+								<button type="submit" class="submit_btn">перезвоните мне</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<div class="backdrop" popovertarget="callback_modal" popovertargetaction="hide"></div>
+		</section>
 
 
 		<!-- Connecting javascript files -->		<script src="js/jquery-3.7.1.min.js"></script>

@@ -2572,4 +2572,23 @@
             font-size: var(--font_size_xs);
         }
     }
+
+
+
+    /*-----------
+        PopUp
+    -----------*/
+    .modal
+    {
+        .inner
+        {
+            .form
+            {
+                .submit_btn
+                {
+                    width: 100%;
+                }
+            }
+        }
+    }
 }

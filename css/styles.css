@@ -12774,6 +12774,7 @@ footer
     width: 100%;
     height: 100%;
 
+    z-index: 100;
     transition: .2s allow-discrete;
     pointer-events: none;
 
@@ -12794,7 +12795,8 @@ footer
 
         width: 100%;
         height: 100%;
-        padding: 20px;
+        padding-block: var(--outside_gap_s) var(--block_padding);
+        padding-inline: var(--inner_gap);
 
         pointer-events: auto;
 
@@ -12806,31 +12808,93 @@ footer
     {
         position: relative;
 
-        width: 500px;
+        width: 762px;
         max-width: 100%;
         margin: auto;
-        padding: 20px;
 
         z-index: 3;
 
-        background: #fff;
+        background: var(--bg_grey);
 
 
         .close_btn
         {
             position: absolute;
-            top: 0;
             right: 0;
+            bottom: 100%;
+            left: 0;
+
+            width: 24px;
+            margin-inline: auto;
+            margin-bottom: var(--inner_gap_l);
 
             z-index: 3;
+
+            color: var(--light_color);
+
+
+            .icon
+            {
+                display: block;
+
+                width: 100%;
+
+                aspect-ratio: 1 / 1;
+            }
+        }
+
+
+        .image
+        {
+            display: block;
+
+            height: 59px;
+        }
+
+
+        .data
+        {
+            display: flex;
+            flex-direction: column;
+            gap: var(--inner_gap);
+
+            padding-block: var(--block_padding_l);
+            padding-inline: var(--block_padding_l);
+        }
+
+
+        .modal_title
+        {
+            font-size: var(--font_size_title);
+            font-weight: 600;
+            line-height: 1;
+
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+
+        .form
+        {
+            width: 565px;
+            max-width: 100%;
+            margin-inline: auto;
+
+
+            .submit_btn
+            {
+                width: 264px;
+                max-width: 100%;
+                margin-inline: auto;
+            }
         }
     }
 
 
     &::backdrop
     {
-        opacity: .5;
-        background: var(--secondary_color);
+        opacity: .9;
+        background: var(--dark_color);
     }
 
 

@@ -1928,4 +1928,26 @@
             font-size: var(--font_size_xs);
         }
     }
+
+
+
+    /*-----------
+        PopUp
+    -----------*/
+    .modal
+    {
+        .inner
+        {
+            width: 592px;
+
+
+            .form
+            {
+                .submit_btn
+                {
+                    width: 228px;
+                }
+            }
+        }
+    }
 }

@@ -217,6 +217,14 @@ document.addEventListener('DOMContentLoaded', function() {
 		el.addEventListener('toggle', e => document.querySelector(`[popovertarget="${el.id}"]`)?.classList.toggle('active', e.newState === 'open'))
 	})
 
+	document.querySelectorAll('.modal .container').forEach(wrapper => {
+		wrapper.addEventListener('click', e => {
+			if (e.target === wrapper) {
+				wrapper.closest('[popover]').hidePopover()
+			}
+		})
+	})
+
 
 	// Mob. menu
 	$('.mob_header .mob_menu_btn, .overlay').click((e) => {
